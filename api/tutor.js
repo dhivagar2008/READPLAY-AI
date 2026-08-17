@@ -7,6 +7,8 @@ import {
 } from "./provider.js";
 import { tutorPrompt } from "./prompts.js";
 
+export const config = { maxDuration: 60 };
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     json(res, 405, { error: "Method not allowed" });

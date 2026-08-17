@@ -57,12 +57,12 @@ function provider() {
 
 function model() {
   if (process.env.AI_MODEL) return process.env.AI_MODEL;
-  return provider() === "gemini" ? "gemini-2.5-flash" : "gpt-4o-mini";
+  return provider() === "gemini" ? "gemini-3.6-flash" : "gpt-4o-mini";
 }
 
 export async function callProvider(
   prompt,
-  { temperature = 0.6, maxTokens = 800 } = {},
+  { temperature = 0.6, maxTokens = 2000 } = {},
 ) {
   const key = process.env.AI_API_KEY;
   if (!key) {
@@ -81,14 +81,23 @@ export async function callProvider(
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature, maxOutputTokens: maxTokens },
+          generationConfig: {
+            temperature,
+            maxOutputTokens: maxTokens,
+            ...(provider() === "gemini"
+              ? { responseMimeType: "application/json" }
+              : {}),
+          },
         }),
       },
     );
     if (!res.ok) throw new Error(`AI request failed with status ${res.status}`);
     const data = await res.json();
     return (
-      data.candidates?.[0]?.content?.parts?.map((p) => p.text).join("") || ""
+      data.candidates?.[0]?.content?.parts
+        ?.filter((p) => !p.thought)
+        .map((p) => p.text)
+        .join("") || ""
     );
   }
   const res = await fetch(`${base}/chat/completions`, {

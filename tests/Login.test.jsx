@@ -34,7 +34,7 @@ describe("Login page", () => {
 
   it("explains sign-in is not ready without a Google client id", () => {
     renderLogin();
-    expect(screen.getByText(/almost ready/)).toBeInTheDocument();
+    expect(screen.getByText(/Almost ready/)).toBeInTheDocument();
   });
 
   it("renders the Google button when configured and signed out", async () => {
