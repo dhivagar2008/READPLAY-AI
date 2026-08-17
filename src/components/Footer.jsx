@@ -12,6 +12,7 @@ const LINKS = [
   { label: "Games", to: "/games" },
   { label: "Make a Lesson", to: "/create" },
   { label: "Tutor", to: "/tutor" },
+  { label: "Buddy", to: "/buddy" },
   { label: "My Stars", to: "/progress" },
   { label: "For Parents", to: "/insights" },
 ];

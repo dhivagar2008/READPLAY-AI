@@ -17,9 +17,9 @@ export function MascotBase({ children, label, color, ...props }) {
   );
 }
 
-export function ToffyCat(props) {
+export function ToffyBody() {
   return (
-    <MascotBase label="Toffy the cat" color="#f97316" {...props}>
+    <>
       <circle cx="60" cy="68" r="42" fill="#fb923c" />
       <path d="M30 40 L22 18 L44 34 Z" fill="#fb923c" />
       <path d="M90 40 L98 18 L76 34 Z" fill="#fb923c" />
@@ -50,13 +50,21 @@ export function ToffyCat(props) {
         strokeWidth="3"
         strokeLinecap="round"
       />
+    </>
+  );
+}
+
+export function ToffyCat(props) {
+  return (
+    <MascotBase label="Toffy the cat" color="#f97316" {...props}>
+      <ToffyBody />
     </MascotBase>
   );
 }
 
-export function JummiMouse(props) {
+export function JummiBody() {
   return (
-    <MascotBase label="Jummi the mouse" color="#ec4899" {...props}>
+    <>
       <circle cx="60" cy="70" r="38" fill="#f9a8d4" />
       <circle cx="34" cy="46" r="20" fill="#f9a8d4" />
       <circle cx="86" cy="46" r="20" fill="#f9a8d4" />
@@ -72,6 +80,14 @@ export function JummiMouse(props) {
         fill="none"
         strokeLinecap="round"
       />
+    </>
+  );
+}
+
+export function JummiMouse(props) {
+  return (
+    <MascotBase label="Jummi the mouse" color="#ec4899" {...props}>
+      <JummiBody />
     </MascotBase>
   );
 }

@@ -11,6 +11,7 @@ import { Create } from "./pages/Create.jsx";
 import { Progress } from "./pages/Progress.jsx";
 import { Login } from "./pages/Login.jsx";
 import { Tutor } from "./pages/Tutor.jsx";
+import { Buddy } from "./pages/Buddy.jsx";
 import { Insights } from "./pages/Insights.jsx";
 import { RequireParent } from "./components/RequireParent.jsx";
 import { PageStub } from "./pages/PageStub.jsx";
@@ -35,6 +36,7 @@ function RoutedApp() {
           <Route path="/games" element={<Games />} />
           <Route path="/create" element={<Create />} />
           <Route path="/tutor" element={<Tutor />} />
+          <Route path="/buddy" element={<Buddy />} />
           <Route path="/progress" element={<Progress />} />
           <Route
             path="/insights"
