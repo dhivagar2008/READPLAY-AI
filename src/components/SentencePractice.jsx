@@ -1,8 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  createRecognizer,
-  isRecognitionSupported,
-} from "../lib/recognition.js";
+import { isRecognitionSupported, listenOnce } from "../lib/recognition.js";
 import { scoreReading } from "../lib/feedback.js";
 import { loadStore, recordEvent, saveStore } from "../lib/progress.js";
 import { useSpeech } from "../hooks/useSpeech.js";
@@ -59,23 +56,19 @@ export function SentencePractice({ sentence, lessonId, skillIds }) {
     }
     if (!supported) return;
     try {
-      const rec = createRecognizer();
-      recRef.current = rec;
-      rec.onresult = (event) => {
-        const transcript = Array.from(event.results)
-          .map((r) => r[0].transcript)
-          .join(" ");
-        const result = scoreReading(transcript, expected);
-        recordScore(result);
-        setScore(result);
-        setListening(false);
-      };
-      rec.onerror = () => {
-        setError("I could not hear you — check the microphone and try again.");
-        setListening(false);
-      };
-      rec.onend = () => setListening(false);
-      rec.start();
+      recRef.current = listenOnce({
+        onResult: (transcript) => {
+          const result = scoreReading(transcript, expected);
+          recordScore(result);
+          setScore(result);
+          setListening(false);
+        },
+        onError: (code, message) => {
+          if (code === "aborted") return;
+          setError(message);
+          setListening(false);
+        },
+      });
       setListening(true);
     } catch {
       setError("Listening is not ready here — tap the words instead.");

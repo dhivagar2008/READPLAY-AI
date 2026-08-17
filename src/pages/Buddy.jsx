@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { buddyReply, buddyWordRound, pickBuddyWord } from "../lib/buddy.js";
-import {
-  createRecognizer,
-  isRecognitionSupported,
-} from "../lib/recognition.js";
+import { isRecognitionSupported, listenOnce } from "../lib/recognition.js";
 import { useSpeech } from "../hooks/useSpeech.js";
 import { BuddyDuo } from "../components/mascots/BuddyDuo.jsx";
 import { FadeUp, MotionPage } from "../lib/motion.jsx";
@@ -75,25 +72,25 @@ export function Buddy() {
     }
     if (!supported) return;
     try {
-      const rec = createRecognizer();
-      recRef.current = rec;
-      rec.onresult = (event) => {
-        const transcript = Array.from(event.results)
-          .map((r) => r[0].transcript)
-          .join(" ");
-        setListening(false);
-        handleUtterance(transcript);
-      };
-      rec.onerror = () => {
-        setSpeech("I could not hear you — check the microphone and try again.");
-        setMood("encouraging");
-        setListening(false);
-      };
-      rec.onend = () => setListening(false);
-      rec.start();
+      recRef.current = listenOnce({
+        onStart: () => {
+          setSpeech("I am listening — go ahead!");
+          setMood("curious");
+        },
+        onResult: (transcript) => {
+          setListening(false);
+          handleUtterance(transcript);
+        },
+        onError: (code, message) => {
+          if (code === "aborted") return;
+          setSpeech(message);
+          setMood("encouraging");
+          setListening(false);
+        },
+      });
       setListening(true);
     } catch {
-      setSpeech("Listening is not ready here — type to me instead!");
+      setSpeech("Voice chat is not ready here — type to me instead!");
       setMood("encouraging");
     }
   };
