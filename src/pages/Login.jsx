@@ -8,6 +8,13 @@ import {
   subscribeAuth,
 } from "../lib/auth.js";
 import { FadeUp, MotionPage } from "../lib/motion.jsx";
+import {
+  ToffyCat,
+  JummiMouse,
+  HootyOwl,
+  DizzyDog,
+  BunboRabbit,
+} from "../components/mascots/Mascots.jsx";
 
 const BENEFITS = [
   { icon: "📊", text: "See your child's reading progress and weekly rhythm" },
@@ -36,21 +43,32 @@ export function Login() {
       className="mx-auto flex min-h-[70vh] max-w-2xl flex-col justify-center px-4 py-10"
     >
       <FadeUp>
-        <div className="mx-auto flex flex-col items-center gap-4 text-center">
+        <div className="mx-auto flex flex-col items-center gap-5 text-center">
           <img
             src="/favicon.svg"
-            alt=""
-            className="h-20 w-20 rounded-3xl shadow-lg"
+            alt="PlayLearn AI logo"
+            className="h-28 w-28 rounded-[1.75rem] shadow-xl sm:h-32 sm:w-32"
           />
           <div>
-            <h1 className="text-4xl">
+            <h1 className="text-5xl">
               PlayLearn <span className="text-accent">AI</span>
             </h1>
-            <p className="mt-1 text-text-muted">
-              Sign in as a grown-up to open the parent insights.
+            <p className="mt-2 text-lg text-text-muted">
+              A gentle reading companion for young learners
             </p>
           </div>
         </div>
+      </FadeUp>
+
+      <FadeUp
+        className="mt-4 flex items-end justify-center gap-3 sm:gap-5"
+        aria-hidden="true"
+      >
+        <DizzyDog className="w-12 sm:w-14" />
+        <JummiMouse className="w-12 sm:w-14" />
+        <ToffyCat className="w-16 sm:w-20" />
+        <HootyOwl className="w-12 sm:w-14" />
+        <BunboRabbit className="w-12 sm:w-14" />
       </FadeUp>
 
       <FadeUp className="card-clay mt-8 p-6 sm:p-8">
@@ -61,7 +79,7 @@ export function Login() {
               The grown-up who set this up still needs to add the Google key.
               Everything else works fine in the meantime!
             </p>
-            <Link to="/" className="btn-clay mt-6">
+            <Link to="/home" className="btn-clay mt-6">
               Back to learning
             </Link>
           </div>
@@ -69,6 +87,9 @@ export function Login() {
 
         {configured && !user && (
           <>
+            <p className="mb-4 text-center font-display text-lg font-bold">
+              Sign in as a grown-up
+            </p>
             <div ref={buttonRef} className="flex justify-center" />
             <p className="mt-4 text-center text-sm text-text-muted">
               Signing in only unlocks the parents-only pages. Kids never need an
@@ -124,7 +145,7 @@ export function Login() {
       )}
 
       <FadeUp className="mt-8 text-center">
-        <Link to="/" className="text-sm text-text-muted no-underline">
+        <Link to="/home" className="text-sm text-text-muted no-underline">
           ← Keep learning without signing in
         </Link>
       </FadeUp>

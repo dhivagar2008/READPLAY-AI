@@ -28,7 +28,8 @@ function RoutedApp() {
       <Navbar />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/lessons" element={<Lessons />} />
           <Route path="/lessons/:slug" element={<Lesson />} />
           <Route path="/games" element={<Games />} />

@@ -5,10 +5,19 @@ import { App } from "../src/App.jsx";
 import "../src/styles/global.css";
 
 describe("PlayLearn shell", () => {
-  it("renders the home page with hero and mascots", () => {
+  it("starts on the login page and reaches home with hero and mascots", async () => {
+    const user = userEvent.setup();
     render(<App />);
     expect(
-      screen.getByRole("heading", { name: /learn to read like it.s play/i }),
+      screen.getByRole("heading", { name: /playlearn ai/i }),
+    ).toBeInTheDocument();
+    await user.click(
+      screen.getByRole("link", { name: /keep learning without signing in/i }),
+    );
+    expect(
+      await screen.findByRole("heading", {
+        name: /learn to read like it.s play/i,
+      }),
     ).toBeInTheDocument();
     expect(screen.getByLabelText("Toffy the cat")).toBeInTheDocument();
     expect(

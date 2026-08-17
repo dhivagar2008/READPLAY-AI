@@ -4,7 +4,7 @@ import { useA11y } from "../hooks/useA11y.js";
 import { getCurrentUser, subscribeAuth } from "../lib/auth.js";
 
 const NAV = [
-  { to: "/", label: "Home" },
+  { to: "/home", label: "Home" },
   { to: "/lessons", label: "Lessons" },
   { to: "/games", label: "Games" },
   { to: "/create", label: "Make a Lesson" },
@@ -29,7 +29,7 @@ export function Navbar() {
         className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-2"
       >
         <Link
-          to="/"
+          to="/home"
           className="flex items-center gap-2 no-underline"
           onClick={close}
         >
