@@ -46,7 +46,7 @@ export default async function handler(req, res) {
       lessonPrompt({ topic, category, difficulty }),
       {
         temperature: 0.6,
-        maxTokens: 800,
+        maxTokens: 2000,
       },
     );
     const lesson = extractJson(raw);
